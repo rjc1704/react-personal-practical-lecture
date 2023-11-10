@@ -3,15 +3,16 @@ import Header from "components/Header";
 import LetterList from "components/LetterList";
 import { useState } from "react";
 import styled from "styled-components";
+import fakeData from "fakeData.json";
 
 export default function Home() {
   const [activeMember, setActiveMember] = useState("카리나");
-
+  const [letters, setLetters] = useState(fakeData);
   return (
     <Container>
       <Header activeMember={activeMember} setActiveMember={setActiveMember} />
-      <AddForm />
-      <LetterList activeMember={activeMember} />
+      <AddForm setLetters={setLetters} />
+      <LetterList letters={letters} activeMember={activeMember} />
     </Container>
   );
 }

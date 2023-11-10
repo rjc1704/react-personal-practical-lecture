@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 import LetterCard from "./LetterCard";
-import fakeData from "fakeData.json";
 
-export default function LetterList({ activeMember }) {
-  const filteredLetters = fakeData.filter(
+export default function LetterList({ activeMember, letters }) {
+  const filteredLetters = letters.filter(
     (letter) => letter.writedTo === activeMember
   );
   return (
