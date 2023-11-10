@@ -1,9 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
-export default function Tabs() {
-  const [activeMember, setActiveMember] = useState("카리나");
-
+export default function Tabs({ activeMember, setActiveMember }) {
   const onActiveMember = (event) => {
     if (event.target === event.currentTarget) return;
 
