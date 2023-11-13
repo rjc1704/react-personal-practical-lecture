@@ -3,11 +3,10 @@ import Header from "components/Header";
 import LetterList from "components/LetterList";
 import { useState } from "react";
 import styled from "styled-components";
-import fakeData from "fakeData.json";
 
-export default function Home() {
+export default function Home({ letters, setLetters }) {
   const [activeMember, setActiveMember] = useState("카리나");
-  const [letters, setLetters] = useState(fakeData);
+
   return (
     <Container>
       <Header activeMember={activeMember} setActiveMember={setActiveMember} />

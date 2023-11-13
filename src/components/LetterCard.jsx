@@ -1,24 +1,19 @@
 import styled from "styled-components";
-import defaultUser from "assets/defaultUser.png";
+
+import { useNavigate } from "react-router-dom";
+import Avatar from "./common/Avatar";
+import { getFormattedDate } from "util/date";
 
 export default function LetterCard({ letter }) {
-  const formattedDate = new Date(letter.createdAt).toLocaleDateString("ko", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  const navigate = useNavigate();
+
   return (
-    <LetterWrapper>
+    <LetterWrapper onClick={() => navigate(`/detail/${letter.id}`)}>
       <UserInfo>
-        <AvatarFigure>
-          <img src={letter.avatar ?? defaultUser} alt="아바타이미지" />
-        </AvatarFigure>
+        <Avatar src={letter.avatar} />
         <NicknameAndDate>
           <p>{letter.nickname}</p>
-          <time>{formattedDate}</time>
+          <time>{getFormattedDate(letter.createdAt)}</time>
         </NicknameAndDate>
       </UserInfo>
       <Content>{letter.content}</Content>
@@ -45,19 +40,6 @@ const UserInfo = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
-`;
-
-const AvatarFigure = styled.figure`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
 `;
 
 const NicknameAndDate = styled.div`
