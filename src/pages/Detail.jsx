@@ -1,10 +1,13 @@
 import Avatar from "components/common/Avatar";
 import Button from "components/common/Button";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
 
 export default function Detail({ letters, setLetters }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingText, setEditingText] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
@@ -18,6 +21,19 @@ export default function Detail({ letters, setLetters }) {
     const newLetters = letters.filter((letter) => letter.id !== id);
     navigate("/");
     setLetters(newLetters);
+  };
+  const onEditDone = () => {
+    if (!editingText) return alert("수정사항이 없습니다.");
+
+    const newLetters = letters.map((letter) => {
+      if (letter.id === id) {
+        return { ...letter, content: editingText };
+      }
+      return letter;
+    });
+    setLetters(newLetters);
+    setIsEditing(false);
+    setEditingText("");
   };
   return (
     <Container>
@@ -36,11 +52,27 @@ export default function Detail({ letters, setLetters }) {
           <time>{getFormattedDate(createdAt)}</time>
         </UserInfo>
         <ToMember>To: {writedTo}</ToMember>
-        <Content>{content}</Content>
-        <BtnsWrapper>
-          <Button text="수정" />
-          <Button text="삭제" onClick={onDeleteBtn} />
-        </BtnsWrapper>
+        {isEditing ? (
+          <>
+            <Textarea
+              autoFocus
+              defaultValue={content}
+              onChange={(event) => setEditingText(event.target.value)}
+            />
+            <BtnsWrapper>
+              <Button text="취소" onClick={() => setIsEditing(false)} />
+              <Button text="수정완료" onClick={onEditDone} />
+            </BtnsWrapper>
+          </>
+        ) : (
+          <>
+            <Content>{content}</Content>
+            <BtnsWrapper>
+              <Button text="수정" onClick={() => setIsEditing(true)} />
+              <Button text="삭제" onClick={onDeleteBtn} />
+            </BtnsWrapper>
+          </>
+        )}
       </DetailWrapper>
     </Container>
   );
@@ -104,4 +136,15 @@ const BtnsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+`;
+
+const Textarea = styled.textarea`
+  font-size: 24px;
+  line-height: 30px;
+  padding: 12px;
+  background-color: black;
+  border-radius: 12px;
+  height: 200px;
+  resize: none;
+  color: white;
 `;
