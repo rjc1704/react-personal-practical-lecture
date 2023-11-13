@@ -1,14 +1,24 @@
 import Avatar from "components/common/Avatar";
 import Button from "components/common/Button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
 
-export default function Detail({ letters }) {
+export default function Detail({ letters, setLetters }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
     (letter) => letter.id === id
   );
+
+  const onDeleteBtn = () => {
+    const answer = window.confirm("정말로 삭제하시겠습니까?");
+    if (!answer) return;
+
+    const newLetters = letters.filter((letter) => letter.id !== id);
+    navigate("/");
+    setLetters(newLetters);
+  };
   return (
     <Container>
       <Link to="/">
@@ -29,7 +39,7 @@ export default function Detail({ letters }) {
         <Content>{content}</Content>
         <BtnsWrapper>
           <Button text="수정" />
-          <Button text="삭제" />
+          <Button text="삭제" onClick={onDeleteBtn} />
         </BtnsWrapper>
       </DetailWrapper>
     </Container>
