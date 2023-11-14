@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { LetterContext } from "context/LetterContext";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
 
-export default function AddForm({ setLetters }) {
+export default function AddForm() {
+  const { setLetters } = useContext(LetterContext);
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");

@@ -1,11 +1,11 @@
 import Tabs from "./Tabs";
 import styled from "styled-components";
 
-export default function Header({ activeMember, setActiveMember }) {
+export default function Header() {
   return (
     <Container>
       <Title>에스파 팬레터함</Title>
-      <Tabs activeMember={activeMember} setActiveMember={setActiveMember} />
+      <Tabs />
     </Container>
   );
 }
