@@ -1,1 +1,1 @@
-# Props-drilling 만으로 팬레터함 구현
+# redux 로 리팩터링
