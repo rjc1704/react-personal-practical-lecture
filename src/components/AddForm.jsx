@@ -1,11 +1,14 @@
-import { LetterContext } from "context/LetterContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
+import { useDispatch } from "react-redux";
+import { addLetter } from "redux/modules/letters";
 
 export default function AddForm() {
-  const { setLetters } = useContext(LetterContext);
+  // const { setLetters } = useContext(LetterContext);
+  const dispatch = useDispatch();
+
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
@@ -23,7 +26,7 @@ export default function AddForm() {
       createdAt: new Date(),
     };
 
-    setLetters((prev) => [newLetter, ...prev]);
+    dispatch(addLetter(newLetter));
     setNickname("");
     setContent("");
   };
